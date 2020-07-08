@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class playermove : MonoBehaviour
+{
+    public int Playerspeed = 10;
+    private bool facingright = true;
+    public int playerJumpPower = 1000;
+    private float moveX;
+
+
+
+    void Update()
+    {
+        playermovement();
+    }
+    void playermovement()
+    {
+        //controls
+        moveX = Input.GetAxis("Horizontal");
+        if (Input.GetButtonDown("Jump"))
+        {
+            Jump();
+        }
+
+
+        //animantion
+        //playerdirection
+        if (moveX < 0.0f && facingright == false)
+        {
+            FlipPlayer();
+        }
+        else if (moveX > 0.0f && facingright == true)
+        {
+            FlipPlayer();
+        }
+
+        //physics
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(moveX * Playerspeed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+    }
+    void Jump()
+    {
+        //jumpingcode
+        GetComponent<Rigidbody2D>().AddForce(Vector2.up * playerJumpPower);
+    }
+    void FlipPlayer()
+    {
+        facingright = !facingright;
+        Vector2 localScale = gameObject.transform.localScale;
+        localScale.x *= -1;
+        transform.localScale = localScale;
+
+
+    }
+}
