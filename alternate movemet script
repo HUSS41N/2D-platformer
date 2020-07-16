@@ -1,0 +1,44 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class playermove : MonoBehaviour
+{
+    public int Playerspeed =10;
+    public bool facingright = true;
+    public int playerJumpPower =1000;
+    public float moveX;
+
+
+  
+    void Update()
+    {
+        playermove(); 
+    }
+   void playermove()
+    {
+        //controls
+        moveX = Input.GetAxis("Horizontal");
+        //animantion
+        //playerdirection
+        if(moveX < 0.0f && facingright == false)
+        {
+            FlipPlayer();
+        }
+        else if (moveX > 0.0f && facingright == true)
+        {
+            FlipPlayer();
+        }
+
+        //physics
+        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(moveX * Playerspeed, gameObject.GetComponent<Rigidbody2D>().velocity.y);
+    }
+    void jump()
+    { 
+    //jumpingcode
+    }
+    void FlipPlayer()
+    {
+
+    }
+}
